@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%--<%@ taglib prefix="c" uri="jakarta.tags.core" %>--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +15,6 @@
                 <h2>Product Management Tool</h2>
                 <div>
                     <form action="/login" method="get">
-                        <span>Hi, <%= username %></span>
                         <button class="btn btn-danger btn-sm">Logout</button>
                     </form>
                 </div>
@@ -63,7 +62,7 @@
                             <td>${product.quantity}</td>
                             <td>${product.size}</td>
                             <td>
-                                <img src="/image?id=${product.id}" width="50" height="50" />
+                                <img src="/image?id=${product.id}" width="80" height="80" />
                             </td>
                             <td>
                                 <button class="btn btn-sm btn-info">✏</button>

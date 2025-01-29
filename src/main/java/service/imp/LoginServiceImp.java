@@ -1,7 +1,6 @@
 package service.imp;
 
 import dao.LoginDao;
-import dao.imp.LoginDaoImp;
 import entity.User;
 import service.LoginService;
 

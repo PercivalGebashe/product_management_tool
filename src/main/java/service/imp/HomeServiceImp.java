@@ -1,7 +1,6 @@
 package service.imp;
 
 import dao.ProductDao;
-import dao.imp.ProductDaoImp;
 import entity.Product;
 import service.HomeService;
 

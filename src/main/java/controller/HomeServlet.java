@@ -4,19 +4,15 @@ import dao.imp.ProductDaoImp;
 import entity.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
 import service.HomeService;
 import service.imp.HomeServiceImp;
 import util.HibernateUtil;
 
 import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -34,19 +30,19 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if(session != null) {
+            try {
+                List<Product> productList = homeService.getProducts();
 
-        try {
-            List<Product> productList = homeService.getProducts();
-
-            // Logging instead of printing to console
-            System.out.println("Fetched Products: " + productList); // Replace with logger if available
-
-            request.setAttribute("products", productList);
-            request.getRequestDispatcher("jsp/home.jsp").forward(request, response);
-        } catch (Exception e) {
-            // Log error and return an appropriate HTTP error response
-            System.err.println("Error fetching products: " + e.getMessage());
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to fetch products");
+                request.setAttribute("products", productList);
+                request.getRequestDispatcher("jsp/home.jsp").forward(request, response);
+            } catch (Exception e) {
+                System.err.println("Error fetching products: " + e.getMessage());
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to fetch products");
+            }
+        }else {
+            response.sendRedirect("/login");
         }
     }
 
