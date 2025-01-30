@@ -37,6 +37,7 @@ public class LoginServlet extends HttpServlet {
 
         // Redirect to index.jsp
         response.sendRedirect(request.getContextPath() + "/index.jsp");
+        return;
     }
 
 
@@ -54,9 +55,11 @@ public class LoginServlet extends HttpServlet {
 
             // Redirecting to home
             response.sendRedirect(request.getContextPath() + "/home");
+            return;
         } else {
             request.setAttribute("errorMessage", "Invalid email or password");
             request.getRequestDispatcher("/index.jsp").forward(request, response);
+            return;
         }
     }
 

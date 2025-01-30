@@ -1,31 +1,13 @@
-let productCount = 0;
-document.getElementById('productForm').addEventListener('submit', function(event) {
-event.preventDefault();
-productCount++;
-const title = document.getElementById('title').value;
-const quantity = document.getElementById('quantity').value;
-const size = document.getElementById('size').value;
-const image = document.getElementById('image').files[0];
-const tableBody = document.getElementById('productTableBody');
+function openEditModal(id, title, quantity, size) {
+    // Populate modal fields with the current product data
+    document.getElementById("productId").value = id;
+    document.getElementById("modalTitle").value = title;
+    document.getElementById("modalQuantity").value = quantity;
+    document.getElementById("modalSize").value = size;
 
-if (image) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const newRow = `<tr>
-            <td>${productCount}</td>
-            <td>${title}</td>
-            <td>${quantity}</td>
-            <td>${size}</td>
-            <td>
-                <img src="/image?id=${product.id}" width="50" height="50" />
-            </td>
-            <td>
-                <button class="btn btn-sm btn-info">✏</button>
-                <button class="btn btn-sm btn-danger">✖</button>
-            </td>
-        </tr>`;
-        tableBody.innerHTML += newRow;
-    };
-    reader.readAsDataURL(image);
+    // Show the modal using Bootstrap's modal function
+    var myModal = new bootstrap.Modal(document.getElementById('editModal'), {
+        keyboard: false
+    });
+    myModal.show();
 }
-});

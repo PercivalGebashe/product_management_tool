@@ -6,8 +6,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import util.HibernateUtil;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ProductDaoImp implements ProductDao {
 
@@ -30,9 +32,9 @@ public class ProductDaoImp implements ProductDao {
     }
 
     @Override
-    public Product getProductById(Long id) {
+    public Product getProductById(String id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(Product.class, id);
+            return session.get(Product.class, UUID.fromString(id));
         }
     }
 
@@ -56,5 +58,36 @@ public class ProductDaoImp implements ProductDao {
         productList.forEach(this::saveProduct);
     }
 
+    @Override
+    public void updateProduct(Product product) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
 
+            session.merge(product);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteProduct(Product product) {
+        Transaction transaction = null;
+        try(Session session = sessionFactory.openSession()){
+            transaction = session.beginTransaction();
+            session.remove(product);
+            transaction.commit();
+
+        }catch (Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+                System.out.println("upig9i");
+        }
+    }
 }

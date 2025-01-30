@@ -1,14 +1,18 @@
 package entity;
 
-import java.sql.Blob;
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.sql.Blob;
+import java.util.UUID;
 
 @Entity
 @Table(name = "products")
 public class Product {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy =  GenerationType.UUID)
+    private UUID id;
 
     private String title;
     private int quantity;
@@ -17,11 +21,12 @@ public class Product {
     @Lob
     @Column(name = "image", columnDefinition = "LONGBLOB")
     private Blob image;
-     public Product(){}
+     public Product(){
+     }
 
     // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public String getId() { return id.toString(); }
+    public void setId(String id) { this.id = UUID.fromString(id); }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }

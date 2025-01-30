@@ -32,8 +32,7 @@ public class ImageServlet extends HttpServlet {
             return;
         }
 
-        Long productId = Long.parseLong(idParam);
-        Product product = productDao.getProductById(productId);
+        Product product = productDao.getProductById(idParam);
 
         if (product == null || product.getImage() == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Image not found");

@@ -40,9 +40,11 @@ public class HomeServlet extends HttpServlet {
             } catch (Exception e) {
                 System.err.println("Error fetching products: " + e.getMessage());
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to fetch products");
+                return;
             }
         }else {
             response.sendRedirect("/login");
+            return;
         }
     }
 
@@ -73,6 +75,7 @@ public class HomeServlet extends HttpServlet {
 
             homeService.getProductDao().saveProduct(product);
             response.sendRedirect("/home"); // Redirect back to home
+            return;
 
         }catch (Exception e){
 
